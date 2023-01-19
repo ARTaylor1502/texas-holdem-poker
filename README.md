@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+* * *
+
+## Acknowledgments
+
+Vector Playing Cards 3.2
+https://totalnonsense.com/open-source-vector-playing-cards/
+Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com
+Licensed under: LGPL 3.0 - https://www.gnu.org/licenses/lgpl-3.0.html
