@@ -75,6 +75,32 @@ html, body, #root,#poker-room {
   border-radius: 50%;
 }
 
+.player-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.player-info {
+    width: 15rem;
+    position: fixed;
+    background: #d5c4ff;
+    z-index: 5;
+    margin-left: 4rem;
+	border-radius: 0.5rem;
+}
+
+.player-name {
+	background-color: #763476;
+	padding: 0.5rem 4rem;
+	color: #fff;
+	border-top-right-radius: 0.5rem;
+}
+
+.player-chips {
+	padding: 0.5rem 4rem;
+	font-size: 1.6rem;
+}
+
 .player-area {
   height: 20%;
 }
@@ -86,4 +112,5 @@ html, body, #root,#poker-room {
   background-color: #fff;
   cursor: pointer;
   overflow: hidden;
+  z-index: 10;
 }
