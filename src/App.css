@@ -51,6 +51,12 @@ html, body, #root,#poker-room {
     height: 100%;
 }  
 
+.center-align {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .App {
   background-color: #161616;
   height: 100%;
@@ -58,14 +64,24 @@ html, body, #root,#poker-room {
 }
 
 #poker-room {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #161616;
+  flex-direction: column;
 }
 
 #poker-table {
-  height: 700px;
-  width: 60%;
+  height: 80%;
+  width: 80%;
   background-color: #14A534;
   border-radius: 50%;
+}
+
+.player-area {
+  height: 20%;
+}
+
+.seat {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background-color: #fff;
 }
