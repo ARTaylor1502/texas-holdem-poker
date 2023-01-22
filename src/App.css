@@ -84,4 +84,6 @@ html, body, #root,#poker-room {
   height: 7rem;
   border-radius: 50%;
   background-color: #fff;
+  cursor: pointer;
+  overflow: hidden;
 }
