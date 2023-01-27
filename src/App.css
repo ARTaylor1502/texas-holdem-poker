@@ -75,9 +75,14 @@ html, body, #root,#poker-room {
   border-radius: 50%;
 }
 
+.card-area {
+	position: absolute;
+}
+
 .player-container {
 	display: flex;
 	flex-direction: row;
+	position: relative;
 }
 
 .player-info {
@@ -94,6 +99,19 @@ html, body, #root,#poker-room {
 	padding: 0.5rem 4rem;
 	color: #fff;
 	border-top-right-radius: 0.5rem;
+}
+
+.player-cards {
+	display: flex;
+	cursor: pointer;
+}
+
+.player-cards .playing-card:first-child {
+	margin-right: 0.5rem;
+}
+
+.playing-card {
+	max-height: 10rem;
 }
 
 .player-chips {
@@ -113,4 +131,20 @@ html, body, #root,#poker-room {
   cursor: pointer;
   overflow: hidden;
   z-index: 10;
+}
+
+#player1-area .card-area {
+	bottom: 8rem;
+}
+
+#player2-area .card-area {
+	top: 8rem;
+}
+
+#new-game-btn {
+	padding: 1rem 1.5rem;
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+	cursor: pointer;
 }
