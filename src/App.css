@@ -57,6 +57,10 @@ html, body, #root,#poker-room {
 	align-items: center;
 }
 
+.ml-auto {
+	margin-left: auto;
+}
+
 .App {
   background-color: #161616;
   height: 100%;
@@ -73,10 +77,15 @@ html, body, #root,#poker-room {
   width: 80%;
   background-color: #14A534;
   border-radius: 50%;
+  display: flex;
 }
 
-.card-area {
-	position: absolute;
+#total-pot {
+	margin-right: 5rem;
+	background-color: #fff;
+	border: 1px solid #000;
+	height: fit-content;
+	padding: 0.5rem;
 }
 
 .player-container {
@@ -133,12 +142,27 @@ html, body, #root,#poker-room {
   z-index: 10;
 }
 
+.card-area {
+	position: absolute;
+	display: flex;
+}
+
 #player1-area .card-area {
 	bottom: 8rem;
 }
 
+#player1-area .button {
+	position: relative;
+    bottom: 3rem;
+}
+
 #player2-area .card-area {
 	top: 8rem;
+}
+
+#player2-area .button {
+	position: relative;
+    top: 8rem;
 }
 
 #new-game-btn {
@@ -147,4 +171,27 @@ html, body, #root,#poker-room {
     bottom: 2rem;
     right: 2rem;
 	cursor: pointer;
+}
+
+.button {
+	width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+	border: 1px solid #000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.8rem;
+}
+
+.big-blind {
+	background-color: #f0f400;
+}
+
+.small-blind {
+	background-color: #f48e00;
+}
+
+.big-blind, .small-blind {
+	margin-left: 1rem;
 }

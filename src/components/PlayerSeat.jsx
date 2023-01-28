@@ -15,6 +15,16 @@ function PlayerSeat(props) {
     seatContent = <span>Take a seat</span>;
   }
 
+  let blindButton;
+
+  if (props.player.length) {
+    if (props.bigBlind.player === props.player[0]) {
+      blindButton = <div className="button big-blind">Big Blind</div>;
+    } else if (props.smallBlind.player === props.player[0]) {
+      blindButton = <div className="button small-blind">Small Blind</div>;
+    }
+  }
+
   const handleMouseOver = () => {
     setRevealCards(true);
   };
@@ -54,6 +64,7 @@ function PlayerSeat(props) {
                   );
                 }))}
         </div>
+        {blindButton}
       </div>
       <div className="seat center-align" onClick={addPlayer}>
         {seatContent}
