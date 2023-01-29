@@ -78,14 +78,30 @@ html, body, #root,#poker-room {
   background-color: #14A534;
   border-radius: 50%;
   display: flex;
+  position: relative;
+  z-index: 10;
+}
+
+#poker-table .playing-card {
+	margin-right: 0.5rem;
+}
+
+#poker-table .playing-card:last-of-type {
+	margin-right: 0;
+}
+
+#table-center {
+	display: flex;
+	align-items: center;
 }
 
 #total-pot {
-	margin-right: 5rem;
 	background-color: #fff;
 	border: 1px solid #000;
 	height: fit-content;
 	padding: 0.5rem;
+	position: absolute;
+    right: 3rem;
 }
 
 .player-container {
@@ -130,6 +146,7 @@ html, body, #root,#poker-room {
 
 .player-area {
   height: 20%;
+  z-index: 20;
 }
 
 .seat {

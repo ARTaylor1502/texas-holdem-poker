@@ -83,6 +83,14 @@ function PokerGame() {
     setHandPotTotal(smallBlind.value + bigBlind.value);
   }
 
+  function dealFlop() {
+    houseHand.flopCard1 = dealCard();
+    houseHand.flopCard2 = dealCard();
+    houseHand.flopCard3 = dealCard();
+
+    setHouseHand(houseHand);
+  }
+
   function startNewGame() {
     setGameStage(1);
     setPlayersInHand(players);
@@ -96,6 +104,7 @@ function PokerGame() {
     }
 
     updateBlinds();
+    dealFlop();
     setPlayerTurn(players[0]);
   }
 
