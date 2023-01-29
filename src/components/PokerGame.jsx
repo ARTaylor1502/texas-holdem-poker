@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PlayerSeat from "./PlayerSeat";
-import Timer from "./Timer";
 import PlayerActions from "./PlayerActions";
 import PokerTable from "./PokerTable";
 
@@ -95,11 +94,15 @@ function PokerGame() {
     setHouseHand(houseHand);
   }
 
+  function resetHouseHand() {
+    Object.entries(houseHand).forEach((key) => (houseHand[key] = null));
+  }
+
   function dealFlop() {
+    resetHouseHand();
     houseHand.flopCard1 = dealCard();
     houseHand.flopCard2 = dealCard();
     houseHand.flopCard3 = dealCard();
-
     setHouseHand(houseHand);
   }
 
@@ -109,6 +112,7 @@ function PokerGame() {
 
     for (let i = 0; i < players.length; i++) {
       let player = players[i];
+      player.hand = [];
 
       for (let i = 0; i <= 1; i++) {
         player.hand.push(dealCard());
