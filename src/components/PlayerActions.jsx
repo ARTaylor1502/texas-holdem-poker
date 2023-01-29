@@ -14,7 +14,7 @@ function PlayerActions(props) {
           Bet <br></br>
           {betAmount}
         </button>
-        <button>Check</button>
+        <button onClick={() => props.checkHandler(props.player)}>Check</button>
         <button>Fold</button>
       </div>
       <div className="slider-container">

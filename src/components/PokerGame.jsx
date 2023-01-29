@@ -126,13 +126,7 @@ function PokerGame() {
 
   function endGame() {}
 
-  function betHandler(player, betAmount) {
-    // make bet and add to pot
-    setHandPotTotal(parseInt(handPotTotal) + parseInt(betAmount));
-    player.chips -= betAmount;
-    setPlayers([...players], player);
-
-    //set next player as turn
+  function updatePlayerTurn(player) {
     const index = players.findIndex((p) => {
       return p === player;
     });
@@ -149,6 +143,14 @@ function PokerGame() {
         endGame();
       }
     }
+  }
+
+  function betHandler(player, betAmount) {
+    setHandPotTotal(parseInt(handPotTotal) + parseInt(betAmount));
+    player.chips -= betAmount;
+    setPlayers([...players], player);
+
+    updatePlayerTurn(player);
   }
 
   return (
@@ -173,6 +175,7 @@ function PokerGame() {
         player={playerTurn}
         minimumAllowedBet={bigBlind}
         betHandler={betHandler}
+        checkHandler={updatePlayerTurn}
       />
       <div id="player1-area" className="player-area center-align">
         <PlayerSeat
