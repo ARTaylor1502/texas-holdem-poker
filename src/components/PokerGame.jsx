@@ -131,7 +131,6 @@ function PokerGame() {
   return (
     <div id="poker-room" className="center-align">
       <div id="player2-area" className="player-area center-align">
-        <Timer seconds={30} />
         <PlayerSeat
           playerTurn={playerTurn === players[1]}
           player={getPlayer("Player Two")}
@@ -153,7 +152,6 @@ function PokerGame() {
         betHandler={betHandler}
       />
       <div id="player1-area" className="player-area center-align">
-        <Timer seconds={30} />
         <PlayerSeat
           playerTurn={playerTurn === players[0]}
           player={getPlayer("Player One")}
