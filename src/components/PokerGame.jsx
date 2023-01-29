@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PlayerSeat from "./PlayerSeat";
 import Timer from "./Timer";
+import PlayerActions from "./PlayerActions";
+import PokerTable from "./PokerTable";
 
 function PokerGame() {
   const pokerGameStages = [
@@ -32,7 +34,14 @@ function PokerGame() {
   const [handPotTotal, setHandPotTotal] = useState([]);
   const [bigBlind, setBigBlind] = useState({ player: false, value: 50 });
   const [smallBlind, setSmallBlind] = useState({ player: false, value: 25 });
-  const [playerTurn, setPlayerTurn] = useState();
+  const [playerTurn, setPlayerTurn] = useState(false);
+  const [houseHand, setHouseHand] = useState({
+    flopCard1: null,
+    flopCard2: null,
+    flopCard3: null,
+    riverCard: null,
+    turnCard: null,
+  });
   const [playersInHand, setPlayersInHand] = useState();
 
   function dealCard() {
@@ -84,12 +93,30 @@ function PokerGame() {
       for (let i = 0; i <= 1; i++) {
         player.hand.push(dealCard());
       }
-
-      setPlayers([...players], player);
     }
 
     updateBlinds();
     setPlayerTurn(players[0]);
+  }
+
+  function betHandler(player, betAmount) {
+    // make bet and add to pot
+    setHandPotTotal(parseInt(handPotTotal) + parseInt(betAmount));
+    player.chips -= betAmount;
+    setPlayers([...players], player);
+
+    //set next player as turn
+    const index = players.findIndex((p) => {
+      return p === player;
+    });
+
+    const nextTurnPlayer = players[index + 1];
+
+    if (nextTurnPlayer) {
+      setPlayerTurn(nextTurnPlayer);
+    } else {
+      setGameStage(gameStage + 1);
+    }
   }
 
   return (
@@ -97,6 +124,7 @@ function PokerGame() {
       <div id="player2-area" className="player-area center-align">
         <Timer seconds={30} />
         <PlayerSeat
+          playerTurn={playerTurn === players[1]}
           player={getPlayer("Player Two")}
           playerName="Player Two"
           avatarUrl="assets/images/avatars/man.svg"
@@ -105,16 +133,20 @@ function PokerGame() {
           bigBlind={bigBlind}
         />
       </div>
-      <div id="poker-table" className="center-align">
-        {gameStage > 0 && (
-          <div id="total-pot" className="center-align ml-auto">
-            <span>Pot Total: {handPotTotal}</span>
-          </div>
-        )}
-      </div>
+      <PokerTable
+        gameStage={gameStage}
+        handPotTotal={handPotTotal}
+        cards={houseHand}
+      />
+      <PlayerActions
+        player={playerTurn}
+        minimumAllowedBet={bigBlind}
+        betHandler={betHandler}
+      />
       <div id="player1-area" className="player-area center-align">
         <Timer seconds={30} />
         <PlayerSeat
+          playerTurn={playerTurn === players[0]}
           player={getPlayer("Player One")}
           playerName="Player One"
           avatarUrl="assets/images/avatars/lady.svg"
