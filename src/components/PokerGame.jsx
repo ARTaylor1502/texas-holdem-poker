@@ -39,8 +39,8 @@ function PokerGame() {
     flopCard1: null,
     flopCard2: null,
     flopCard3: null,
-    riverCard: null,
     turnCard: null,
+    riverCard: null,
   });
   const [playersInHand, setPlayersInHand] = useState();
 
@@ -83,6 +83,18 @@ function PokerGame() {
     setHandPotTotal(smallBlind.value + bigBlind.value);
   }
 
+  function updateGameStage(stageNumber) {
+    setGameStage(stageNumber);
+
+    if (stageNumber === 3) {
+      houseHand.turnCard = dealCard();
+    } else if (stageNumber === 4) {
+      houseHand.riverCard = dealCard();
+    }
+
+    setHouseHand(houseHand);
+  }
+
   function dealFlop() {
     houseHand.flopCard1 = dealCard();
     houseHand.flopCard2 = dealCard();
@@ -108,6 +120,8 @@ function PokerGame() {
     setPlayerTurn(players[0]);
   }
 
+  function endGame() {}
+
   function betHandler(player, betAmount) {
     // make bet and add to pot
     setHandPotTotal(parseInt(handPotTotal) + parseInt(betAmount));
@@ -124,7 +138,12 @@ function PokerGame() {
     if (nextTurnPlayer) {
       setPlayerTurn(nextTurnPlayer);
     } else {
-      setGameStage(gameStage + 1);
+      if (gameStage < 4) {
+        updateGameStage(gameStage + 1);
+        setPlayerTurn(players[0]);
+      } else {
+        endGame();
+      }
     }
   }
 
