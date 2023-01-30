@@ -1,11 +1,9 @@
 function PokerTable(props) {
-  let tableCards;
-
   const activeCards = Object.values(props.cards).filter(
     (value) => value !== null
   );
 
-  tableCards = Object.entries(activeCards).map(([key, value]) => {
+  const tableCards = Object.entries(activeCards).map(([key, value]) => {
     return (
       <img
         key={`house-card${key}`}

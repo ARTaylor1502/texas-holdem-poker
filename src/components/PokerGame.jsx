@@ -1,33 +1,10 @@
 import { useState } from "react";
+import { dealCard } from "../helpers/cards";
 import PlayerSeat from "./PlayerSeat";
 import PlayerActions from "./PlayerActions";
 import PokerTable from "./PokerTable";
 
 function PokerGame() {
-  const pokerGameStages = [
-    {
-      stage_number: 1,
-      stage_name: "Pre Flop",
-      cards_in_play: 3,
-    },
-    {
-      stage_number: 2,
-      stage_name: "Flop",
-      cards_in_play: 3,
-    },
-    {
-      stage_number: 3,
-      stage_name: "Turn",
-      cards_in_play: 4,
-    },
-    {
-      stage_number: 4,
-      stage_name: "River",
-      cards_in_play: 5,
-    },
-  ];
-  const suits = ["club", "heart", "spade", "diamond"];
-
   const [gameStage, setGameStage] = useState(false);
   const [players, setPlayers] = useState([]);
   const [handPotTotal, setHandPotTotal] = useState([]);
@@ -43,27 +20,13 @@ function PokerGame() {
   });
   const [playersInHand, setPlayersInHand] = useState();
 
-  function dealCard() {
-    const cardClub = suits[Math.floor(Math.random() * suits.length)];
-    const cardNumber = Math.floor(Math.random() * 13) + 1;
-    const imgUri = `assets/images/cards/${cardClub}${cardNumber}.svg`;
-    const cardValue = cardNumber > 10 ? 10 : cardNumber;
-
-    return {
-      club: cardClub,
-      number: cardNumber,
-      img_uri: imgUri,
-      value: cardValue,
-    };
-  }
-
   function getPlayer(name) {
     return players.filter((player) => {
       return player.name === name;
     });
   }
 
-  function setGamePlayers(player) {
+  function setTablePlayers(player) {
     setPlayers((current) => [...current, player]);
   }
 
@@ -94,21 +57,19 @@ function PokerGame() {
     setHouseHand(houseHand);
   }
 
-  function resetHouseHand() {
-    Object.entries(houseHand).forEach((key) => (houseHand[key] = null));
-  }
-
   function dealFlop() {
-    resetHouseHand();
-    houseHand.flopCard1 = dealCard();
-    houseHand.flopCard2 = dealCard();
-    houseHand.flopCard3 = dealCard();
-    setHouseHand(houseHand);
+    setHouseHand({
+      flopCard1: dealCard(),
+      flopCard2: dealCard(),
+      flopCard3: dealCard(),
+      turnCard: null,
+      riverCard: null,
+    });
   }
 
   function startNewGame() {
     setGameStage(1);
-    setPlayersInHand(players);
+    setPlayersInHand(players.map((player) => player.name));
 
     for (let i = 0; i < players.length; i++) {
       let player = players[i];
@@ -124,17 +85,22 @@ function PokerGame() {
     setPlayerTurn(players[0]);
   }
 
-  function endGame() {}
+  function endGame() {
+    const winningPlayer = getPlayer(playersInHand[0]);
+    winningPlayer[0].chips += handPotTotal;
+    setHandPotTotal(0);
+    updateGameStage(5);
+  }
 
   function updatePlayerTurn(player) {
-    const index = players.findIndex((p) => {
-      return p === player;
+    const index = playersInHand.findIndex((p) => {
+      return p === player.name;
     });
 
-    const nextTurnPlayer = players[index + 1];
+    const nextTurnPlayer = getPlayer(playersInHand[index + 1]);
 
-    if (nextTurnPlayer) {
-      setPlayerTurn(nextTurnPlayer);
+    if (nextTurnPlayer.length) {
+      setPlayerTurn(nextTurnPlayer[0]);
     } else {
       if (gameStage < 4) {
         updateGameStage(gameStage + 1);
@@ -149,19 +115,38 @@ function PokerGame() {
     setHandPotTotal(parseInt(handPotTotal) + parseInt(betAmount));
     player.chips -= betAmount;
     setPlayers([...players], player);
-
     updatePlayerTurn(player);
+  }
+
+  function playerFold(player) {
+    updatePlayerTurn(player);
+
+    const index = playersInHand.indexOf(player.name);
+    if (index > -1) {
+      playersInHand.splice(index, 1);
+    }
+
+    setPlayersInHand(playersInHand);
+
+    if (playersInHand.length < 2) {
+      endGame();
+    }
+  }
+
+  function isActivePlayer(player) {
+    return player && playersInHand && playersInHand.indexOf(player.name) > -1;
   }
 
   return (
     <div id="poker-room" className="center-align">
       <div id="player2-area" className="player-area center-align">
         <PlayerSeat
-          playerTurn={playerTurn === players[1]}
+          playerTurn={playerTurn === getPlayer("Player Two")[0]}
           player={getPlayer("Player Two")}
+          activePlayer={isActivePlayer(players[1])}
           playerName="Player Two"
           avatarUrl="assets/images/avatars/man.svg"
-          setGamePlayers={setGamePlayers}
+          setTablePlayer={setTablePlayers}
           smallBlind={smallBlind}
           bigBlind={bigBlind}
         />
@@ -174,16 +159,19 @@ function PokerGame() {
       <PlayerActions
         player={playerTurn}
         minimumAllowedBet={bigBlind}
+        gameStage={gameStage}
         betHandler={betHandler}
         checkHandler={updatePlayerTurn}
+        foldHandler={playerFold}
       />
       <div id="player1-area" className="player-area center-align">
         <PlayerSeat
-          playerTurn={playerTurn === players[0]}
+          playerTurn={playerTurn === getPlayer("Player One")[0]}
           player={getPlayer("Player One")}
+          activePlayer={isActivePlayer(players[0])}
           playerName="Player One"
           avatarUrl="assets/images/avatars/lady.svg"
-          setGamePlayers={setGamePlayers}
+          setTablePlayer={setTablePlayers}
           smallBlind={smallBlind}
           bigBlind={bigBlind}
         />

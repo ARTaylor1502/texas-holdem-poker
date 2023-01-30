@@ -4,15 +4,7 @@ function PlayerSeat(props) {
   const [revealCards, setRevealCards] = useState(false);
 
   function addPlayer() {
-    props.setGamePlayers({ name: props.playerName, chips: 500, hand: [] });
-  }
-
-  let seatContent;
-
-  if (props.player.length) {
-    seatContent = <img src={props.avatarUrl} alt="Player avatar" />;
-  } else {
-    seatContent = <span>Take a seat</span>;
+    props.setTablePlayer({ name: props.playerName, chips: 500, hand: [] });
   }
 
   let blindButton;
@@ -34,7 +26,9 @@ function PlayerSeat(props) {
   };
 
   return (
-    <div className="player-container">
+    <div
+      className={`player-container${props.playerTurn ? " player-turn" : ""}`}
+    >
       <div className="card-area">
         <div
           className="player-cards"
@@ -66,9 +60,21 @@ function PlayerSeat(props) {
         </div>
         {blindButton}
       </div>
-      <div className="seat center-align" onClick={addPlayer}>
-        {seatContent}
-      </div>
+
+      {!props.player.length ? (
+        <div className="seat center-align" onClick={addPlayer}>
+          <span>Take a seat</span>
+        </div>
+      ) : (
+        <div
+          className={`seat taken-seat center-align ${
+            props.activePlayer ? "active" : "inactive"
+          }`}
+        >
+          <img src={props.avatarUrl} alt="Player avatar" />
+        </div>
+      )}
+
       {props.player.length && (
         <div className="player-info">
           <div className="player-name">{props.player[0].name}</div>
