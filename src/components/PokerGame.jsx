@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dealCard } from "../helpers/cards";
+import { dealCard, calculateHighestHand } from "../helpers/cards";
 import PlayerSeat from "./PlayerSeat";
 import PlayerActions from "./PlayerActions";
 import PokerTable from "./PokerTable";
@@ -85,11 +85,45 @@ function PokerGame() {
     setPlayerTurn(players[0]);
   }
 
-  function endGame() {
+  function foldEndGame() {
     const winningPlayer = getPlayer(playersInHand[0]);
     winningPlayer[0].chips += handPotTotal;
     setHandPotTotal(0);
     updateGameStage(5);
+  }
+
+  function calculateWinner() {
+    //calculate house hand
+
+    const houseSuits = Object.values(houseHand).map((hand) => hand.suit);
+    const houseValues = Object.values(houseHand).map((hand) => hand.number);
+
+    const houseHighestHand = calculateHighestHand(houseSuits, houseValues);
+
+    const playerOneHighestHand = calculateHighestHand(
+      Object.values(getPlayer("Player One")[0].hand)
+        .map((hand) => hand.suit)
+        .concat(houseSuits),
+      Object.values(getPlayer("Player One")[0].hand)
+        .map((hand) => hand.number)
+        .concat(houseValues)
+    );
+
+    const playerTwoHighestHand = calculateHighestHand(
+      Object.values(getPlayer("Player Two")[0].hand)
+        .map((hand) => hand.suit)
+        .concat(houseSuits),
+      Object.values(getPlayer("Player Two")[0].hand)
+        .map((hand) => hand.number)
+        .concat(houseValues)
+    );
+
+    console.log("house", houseHighestHand);
+    console.log("player one", playerOneHighestHand);
+    console.log("player two", playerTwoHighestHand);
+    //loop through all players in hand
+    //check what hand each player has
+    //calculate which player has the strongest hand
   }
 
   function updatePlayerTurn(player) {
@@ -106,7 +140,7 @@ function PokerGame() {
         updateGameStage(gameStage + 1);
         setPlayerTurn(players[0]);
       } else {
-        endGame();
+        calculateWinner();
       }
     }
   }
@@ -129,7 +163,7 @@ function PokerGame() {
     setPlayersInHand(playersInHand);
 
     if (playersInHand.length < 2) {
-      endGame();
+      foldEndGame();
     }
   }
 
