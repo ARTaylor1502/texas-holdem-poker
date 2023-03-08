@@ -35,7 +35,7 @@ function PlayerSeat(props) {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
-          {props.player.length &&
+          {props.player.length > 0 &&
             (revealCards
               ? props.player[0].hand.map((card, i) => {
                   return (
@@ -61,7 +61,7 @@ function PlayerSeat(props) {
         {blindButton}
       </div>
 
-      {!props.player.length ? (
+      {!props.player.length > 0 ? (
         <div className="seat center-align" onClick={addPlayer}>
           <span>Take a seat</span>
         </div>
@@ -75,7 +75,7 @@ function PlayerSeat(props) {
         </div>
       )}
 
-      {props.player.length && (
+      {props.player.length > 0 && (
         <div className="player-info">
           <div className="player-name">{props.player[0].name}</div>
           <div className="player-chips">{props.player[0].chips}</div>
