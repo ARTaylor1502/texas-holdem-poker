@@ -178,7 +178,7 @@ html, body, #root,#poker-room {
 }
 
 #player1-area .card-area {
-	bottom: 8rem;
+	bottom: 9rem;
 }
 
 #player1-area .button {
@@ -186,7 +186,7 @@ html, body, #root,#poker-room {
 }
 
 #player2-area .card-area {
-	top: 8rem;
+	top: 9rem;
 }
 
 #player2-area .button {
@@ -228,7 +228,7 @@ html, body, #root,#poker-room {
 #player-actions {
     position: fixed;
 	left: 5rem;
-	width: 30rem;
+	width: 25rem;
 }
 
 #player-actions.player-one-turn {
