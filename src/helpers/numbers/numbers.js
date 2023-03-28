@@ -2,6 +2,7 @@ export function mapSequentialNumbers(array) {
   const sortedArray = array.sort((a, b) => {
     return a - b;
   });
+
   let sequentialNumbers = [];
 
   for (let i = 0; i < sortedArray.length; i++) {

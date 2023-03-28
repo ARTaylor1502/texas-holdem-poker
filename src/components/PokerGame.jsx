@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dealCard, calculateHighestHand } from "../helpers/cards";
+import { dealCard, calculateHighestHand } from "../helpers/cards/cards";
 import PlayerSeat from "./PlayerSeat";
 import PlayerActions from "./PlayerActions";
 import PokerTable from "./PokerTable";
@@ -93,37 +93,23 @@ function PokerGame() {
   }
 
   function calculateWinner() {
-    //calculate house hand
+    let finalHands = {
+      house: calculateHighestHand(Object.values(houseHand)),
+    };
 
-    const houseSuits = Object.values(houseHand).map((hand) => hand.suit);
-    const houseValues = Object.values(houseHand).map((hand) => hand.number);
-
-    const houseHighestHand = calculateHighestHand(houseSuits, houseValues);
-
-    const playerOneHighestHand = calculateHighestHand(
-      Object.values(getPlayer("Player One")[0].hand)
-        .map((hand) => hand.suit)
-        .concat(houseSuits),
-      Object.values(getPlayer("Player One")[0].hand)
-        .map((hand) => hand.number)
-        .concat(houseValues)
-    );
-
-    const playerTwoHighestHand = calculateHighestHand(
-      Object.values(getPlayer("Player Two")[0].hand)
-        .map((hand) => hand.suit)
-        .concat(houseSuits),
-      Object.values(getPlayer("Player Two")[0].hand)
-        .map((hand) => hand.number)
-        .concat(houseValues)
-    );
-
-    console.log("house", houseHighestHand);
-    console.log("player one", playerOneHighestHand);
-    console.log("player two", playerTwoHighestHand);
     //loop through all players in hand
+    for (let i = 0; i < playersInHand.length; i++) {
+      let playerName = playersInHand[i];
+
+      finalHands[playerName] = calculateHighestHand(
+        getPlayer(playerName)[0].hand.concat(Object.values(houseHand))
+      );
+    }
+
     //check what hand each player has
     //calculate which player has the strongest hand
+
+    //return winning player
   }
 
   function updatePlayerTurn(player) {
@@ -140,7 +126,7 @@ function PokerGame() {
         updateGameStage(gameStage + 1);
         setPlayerTurn(players[0]);
       } else {
-        calculateWinner();
+        let winner = calculateWinner();
       }
     }
   }
