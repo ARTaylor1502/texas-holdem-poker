@@ -106,10 +106,13 @@ function PokerGame() {
       );
     }
 
-    //check what hand each player has
-    //calculate which player has the strongest hand
+    //calculate which player has the strongest hand 
+    const winningPlayer = Object.keys(finalHands).reduce((previousPlayer, currentPlayer) => {
+      return finalHands[currentPlayer].hand_rank < finalHands[previousPlayer].hand_rank ? currentPlayer : previousPlayer;
+    });
 
-    //return winning player
+    updateGameStage(5);
+    console.log(`Winning player is ${winningPlayer}`);
   }
 
   function updatePlayerTurn(player) {
@@ -126,7 +129,7 @@ function PokerGame() {
         updateGameStage(gameStage + 1);
         setPlayerTurn(players[0]);
       } else {
-        let winner = calculateWinner();
+        calculateWinner();
       }
     }
   }
