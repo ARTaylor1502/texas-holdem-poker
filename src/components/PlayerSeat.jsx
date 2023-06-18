@@ -1,20 +1,98 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { usePokerGame } from "../contexts/PokerGameContext";
 
-function PlayerSeat(props) {
+ function PlayerSeat(props) {
+  const {pokerGame, setPokerGame} = usePokerGame();
   const [revealCards, setRevealCards] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const [showNameInput, setShowNameInput] = useState(false);
 
   function addPlayer() {
-    props.setTablePlayer({ name: props.playerName, chips: 500, hand: [] });
+    const {players} = pokerGame;
+    //TODO: Make avatar selection dynamic 
+    players.push({name: playerName, chips: 500, avatar: "assets/images/avatars/lady.svg", seatNumber: props.seatNumber });
+    setShowNameInput(false);
+    setPokerGame({ ...pokerGame, players: players});
   }
+
+  const isEmptySeat = !props.player;
 
   let blindButton;
 
-  if (props.player.length) {
-    if (props.bigBlind.player === props.player[0]) {
+  if (props.player) {
+    if (pokerGame.playerPositions.bigBlind === props.player.name) {
       blindButton = <div className="button big-blind">Big Blind</div>;
-    } else if (props.smallBlind.player === props.player[0]) {
+    } else if (pokerGame.playerPositions.smallBlind === props.player.name) {
       blindButton = <div className="button small-blind">Small Blind</div>;
     }
+  }
+  
+  const isActivePlayer = useMemo(() => 
+    props.player && 
+    pokerGame.currentHand.players && 
+    pokerGame.currentHand.players.findIndex(p => p.playerId === props.player.name) > -1,
+    [pokerGame.currentHand.players, props.player]
+  );
+
+  let playerCards;
+
+  if (!isEmptySeat && isActivePlayer) {
+    const playerInHand = pokerGame.currentHand.players[pokerGame.currentHand.players.findIndex(p => p.playerId === props.player.name)];
+
+    if (revealCards) {
+      playerCards = playerInHand.hand.map((card, i) => {
+        return (
+          <img
+            key={`${playerInHand.playerId}.name-card${i}`}
+            className="playing-card"
+            src={card.img_uri}
+            alt="Playing Card"
+          />
+        );
+      });
+    } else {
+      playerCards = playerInHand.hand.map((card, i) => {
+        return (
+          <img
+            key={`${playerInHand.playerId}.name-card${i}`}
+            className="playing-card"
+            src={"assets/images/cards/card-back.svg"}
+            alt="Playing Card"
+          />
+        );
+      });
+    }
+  };
+
+  let playerSeat; 
+
+  if (!isEmptySeat) {
+    playerSeat = (
+      <div
+        className={`seat taken-seat center-align ${
+          isActivePlayer ? "active" : "inactive"
+        }`}>
+        <img src={props.player.avatar} alt="Player avatar" />
+      </div>
+    )
+  } else if (showNameInput) {
+    playerSeat = (
+      <div className="seat center-align">
+        <div className="player-name-container">
+          <label>Please enter your name:</label>
+          <div className="player-name-selection">
+            <input onChange={(e) => setPlayerName(e.currentTarget.value)}/>
+            <button onClick={addPlayer}>Confirm?</button>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    playerSeat = (
+      <div className="seat center-align" onClick={() => setShowNameInput(true)}>
+        <span>Take a seat</span>
+      </div>
+    )
   }
 
   const handleMouseOver = () => {
@@ -27,7 +105,7 @@ function PlayerSeat(props) {
 
   return (
     <div
-      className={`player-container${props.playerTurn ? " player-turn" : ""}`}
+      className={`player-container player-position-${props.seatNumber}${props.player && pokerGame.currentHand.currentPlayerTurn === props.player.name ? " player-turn" : ""}`}
     >
       <div className="card-area">
         <div
@@ -35,51 +113,22 @@ function PlayerSeat(props) {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
-          {props.player.length > 0 &&
-            (revealCards
-              ? props.player[0].hand.map((card, i) => {
-                  return (
-                    <img
-                      key={`${props.player[0]}.name-card${i}`}
-                      className="playing-card"
-                      src={card.img_uri}
-                      alt="Playing Card"
-                    />
-                  );
-                })
-              : props.player[0].hand.map((card, i) => {
-                  return (
-                    <img
-                      key={`${props.player[0]}.name-card${i}`}
-                      className="playing-card"
-                      src={"assets/images/cards/card-back.svg"}
-                      alt="Playing Card"
-                    />
-                  );
-                }))}
+          {playerCards}
         </div>
         {blindButton}
       </div>
 
-      {!props.player.length > 0 ? (
-        <div className="seat center-align" onClick={addPlayer}>
-          <span>Take a seat</span>
-        </div>
-      ) : (
-        <div
-          className={`seat taken-seat center-align ${
-            props.activePlayer ? "active" : "inactive"
-          }`}
-        >
-          <img src={props.avatarUrl} alt="Player avatar" />
+      {playerSeat}
+
+      {!isEmptySeat && (
+        <div className="player-info">
+          <div className="player-name">{props.player.name}</div>
+          <div className="player-chips">{props.player.chips}</div>
         </div>
       )}
 
-      {props.player.length > 0 && (
-        <div className="player-info">
-          <div className="player-name">{props.player[0].name}</div>
-          <div className="player-chips">{props.player[0].chips}</div>
-        </div>
+      {props.children && (
+        <div className="player-additional">{props.children}</div>
       )}
     </div>
   );

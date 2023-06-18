@@ -1,30 +1,16 @@
-function PokerTable(props) {
-  const activeCards = Object.values(props.cards).filter(
-    (value) => value !== null
-  );
+import { usePokerGame } from "../contexts/PokerGameContext";
+import HouseCards from "./HouseCards";
 
-  const tableCards = Object.entries(activeCards).map(([key, value]) => {
-    return (
-      <img
-        key={`house-card${key}`}
-        className="playing-card"
-        src={
-          props.gameStage > 1
-            ? value.img_uri
-            : "assets/images/cards/card-back.svg"
-        }
-        alt="Playing Card"
-      />
-    );
-  });
+function PokerTable() {
+  const {pokerGame} = usePokerGame();
 
   return (
     <div id="poker-table" className="center-align">
-      {props.gameStage > 0 && (
+      {pokerGame.currentHand.handStage > 0 && (
         <div id="table-center">
-          <div className="house-cards-container">{tableCards}</div>
+          <HouseCards />
           <div id="total-pot" className="center-align ml-auto">
-            <span>Pot Total: {props.handPotTotal}</span>
+            <span>Pot Total: {pokerGame.currentHand.totalPot}</span>
           </div>
         </div>
       )}

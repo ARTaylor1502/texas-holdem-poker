@@ -72,14 +72,20 @@ html, body, #root,#poker-room {
   flex-direction: column;
 }
 
+#app-container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
 #poker-table {
-  height: 50%;
-  width: 60%;
-  /* background-color: #14A534;
-  border-radius: 50%; */
-  display: flex;
-  position: relative;
-  z-index: 10;
+	height: 35%;
+    width: 40%;
+    display: flex;
+    position: relative;
+    border: 2rem solid #000;
+    border-radius: 3rem;
+    background: rgb(0,145,214);
+    background: radial-gradient(circle, rgba(0,145,214,1) 0%, rgba(18,71,144,1) 100%);
 }
 
 #poker-table .playing-card {
@@ -104,10 +110,52 @@ html, body, #root,#poker-room {
     right: 3rem;
 }
 
+#poker-players-container {
+    height: 65%;
+    width: 70%;
+    position: absolute;
+}
+
 .player-container {
 	display: flex;
 	flex-direction: row;
-	position: relative;
+	position: absolute;
+}
+
+.player-container .player-cards {
+	max-height: 5rem;
+}
+
+.player-container .card-area {
+	top: 5rem;
+}
+
+.player-position-0 {
+	top: 5%;
+}
+
+.player-position-1 {
+	top: 25%;
+    right: 10%;
+}
+
+.player-position-2 {
+    top: 65%;
+    right: 10%;
+}
+
+.player-position-3 {
+	bottom: 5%;
+}
+
+.player-position-4 {
+	bottom: 25%;
+    left: 10%;
+}
+
+.player-position-5 {
+	top: 25%;
+    left: 10%;
 }
 
 .player-turn .seat, .player-turn .player-info {
@@ -124,6 +172,12 @@ html, body, #root,#poker-room {
 	border-radius: 0.5rem;
 }
 
+.player-additional {
+	position: absolute;
+	top: 8rem;
+	z-index: 100;
+}
+
 .player-name {
 	background-color: #763476;
 	padding: 0.5rem 4rem;
@@ -132,16 +186,27 @@ html, body, #root,#poker-room {
 }
 
 .player-cards {
+	z-index: 99;
 	display: flex;
 	cursor: pointer;
 }
 
+.playing-card {
+	position: relative;
+}
+
 .player-cards .playing-card:first-child {
-	margin-right: 0.5rem;
+	transform: rotate(354deg);
+}
+
+.player-cards .playing-card:nth-child(2) {
+	transform: rotate(8deg);
+	right: 4.5em;
+    top: 0.5rem;
 }
 
 .playing-card {
-    max-height: 7rem;
+    max-height: 8rem;
 }
 
 .player-chips {
@@ -158,7 +223,9 @@ html, body, #root,#poker-room {
   width: 7rem;
   height: 7rem;
   border-radius: 50%;
-  background-color: #fff;
+  background: radial-gradient(circle, rgba(43,42,40,1) 0%, rgba(18,8,1,1) 100%);
+  color: #fff;
+  border: 1px solid #fff;
   cursor: pointer;
   overflow: hidden;
   z-index: 10;
@@ -170,6 +237,38 @@ html, body, #root,#poker-room {
 
 .seat.inactive img {
 	opacity: 0.5;
+}
+
+.player-name-container {
+	z-index: 99;
+    border: 1px solid #000;
+	border-radius: 0.5rem;
+    position: absolute;
+	padding: 1rem;
+	background: #d5c4ff;
+}
+
+.player-name-container label {
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.player-name-selection {
+    display: flex;
+}
+
+.player-name-selection input {
+	line-height: 2rem;
+}
+
+.player-name-selection button {
+	margin-left: 1rem;
+	color: #fff;
+    background-color: #4a79c1;
+    border: 3px solid #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .card-area {
@@ -222,33 +321,36 @@ html, body, #root,#poker-room {
 }
 
 .big-blind, .small-blind {
-	margin-left: 1rem;
+	z-index: 99;
 }
 
 #player-actions {
     position: fixed;
-	left: 5rem;
 	width: 25rem;
-}
-
-#player-actions.player-one-turn {
-    bottom: 5rem;
-}
-
-#player-actions.player-two-turn {
-    top: 5rem;
 }
 
 #player-actions button {
 	color: #fff;
-    background-color: #4a79c1;
     border: 3px solid #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.75rem;
     font-size: 1rem;
     border-radius: 0.5rem;
 	cursor: pointer;
-	margin-right: 1rem;
+    margin-right: 0.75rem;
 	flex-basis: 100%;
+}
+
+
+.bet-btn {
+    background: rgb(88 185 41);
+}
+
+.check-btn {
+	background: rgb(71 143 247);
+}
+
+.fold-btn {
+	background: rgb(173,36,36);
 }
 
 #player-actions button:last-child {
@@ -260,7 +362,7 @@ html, body, #root,#poker-room {
 }
 
 .slider-container {
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
 }
 
 input[type="range"] {
@@ -289,7 +391,7 @@ input[type="range"]::-webkit-slider-thumb {
 	-webkit-appearance: none; /* Override default look */
 	appearance: none;
 	margin-top: -12px; /* Centers thumb on the track */
-	background-color: #0dc2de;
+	background-color: #763476;
 	height: 2rem;
 	width: 1rem;    
  }

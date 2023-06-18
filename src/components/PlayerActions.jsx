@@ -1,30 +1,34 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { usePokerGame } from "../contexts/PokerGameContext";
 
-function PlayerActions(props) {
-  const [betAmount, setBetAmount] = useState(0);
+function PlayerActions() {
+  const { pokerGame, getPlayer, betHandler, updatePlayerTurn, foldHandler } = usePokerGame();
+  const [ betAmount, setBetAmount ] = useState(0);
+  const activePlayer = useMemo(() => getPlayer(pokerGame.currentHand.currentPlayerTurn), [pokerGame.currentHand.currentPlayerTurn, getPlayer]);
 
-  if (!props.player || props.gameStage === 5) {
+  if (!activePlayer || pokerGame.currentHand.handStage === 5) {
     return null;
   }
 
   return (
     <div
       id="player-actions"
-      className={`${props.player.name.replace(" ", "-").toLowerCase()}-turn`}
+      className={`${activePlayer.seatNumber}-turn`}
     >
       <div id="actions-container">
-        <button onClick={() => props.betHandler(props.player, betAmount)}>
+        <button className="bet-btn" onClick={() => betHandler(activePlayer, betAmount)}>
           Bet <br></br>
           {betAmount}
         </button>
-        <button onClick={() => props.checkHandler(props.player)}>Check</button>
-        <button onClick={() => props.foldHandler(props.player)}>Fold</button>
+        <button className="check-btn" onClick={() => updatePlayerTurn(activePlayer)}>Check</button>
+        <button className="fold-btn" onClick={() => foldHandler(activePlayer)}>Fold</button>
       </div>
       <div className="slider-container">
         <input
           type="range"
-          min={props.minimumAllowedBet}
-          max={props.player.chips}
+          //TODO Make dynamic minimum bet amount
+          min={0}
+          max={activePlayer.chips}
           className="slider"
           onChange={(e) => setBetAmount(e.currentTarget.value)}
         />
