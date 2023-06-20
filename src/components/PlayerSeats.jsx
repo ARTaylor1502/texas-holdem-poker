@@ -3,7 +3,7 @@ import { usePokerGame } from "../contexts/PokerGameContext";
 import PlayerActions from "./PlayerActions";
 
 function PlayerSeats() {
-  const {pokerGame} = usePokerGame();
+  const { pokerGame } = usePokerGame();
   let PlayerSeats = [];
 
   for (let i = 0; i < pokerGame.numberOfSeats; i++) {

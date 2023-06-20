@@ -1,7 +1,7 @@
 import { usePokerGame } from "../contexts/PokerGameContext";
 
 function NewGameButton() {
-  const {pokerGame, startNewGame} = usePokerGame();
+  const { pokerGame, dispatch } = usePokerGame();
   const gameInProgress = pokerGame.currentHand.handStage > 0 && pokerGame.currentHand.handStage < 5;
 
   if (pokerGame.players.length < 2 || (gameInProgress)) {
@@ -9,7 +9,7 @@ function NewGameButton() {
   }
 
   return (
-    <button id="new-game-btn" onClick={startNewGame}>
+    <button id="new-game-btn" onClick={() => dispatch({type: 'startNewGame'})}>
       New Game
     </button>
   );

@@ -2,9 +2,12 @@ import { useMemo, useState } from "react";
 import { usePokerGame } from "../contexts/PokerGameContext";
 
 function PlayerActions() {
-  const { pokerGame, getPlayer, betHandler, updatePlayerTurn, foldHandler } = usePokerGame();
+  const { pokerGame, dispatch } = usePokerGame();
   const [ betAmount, setBetAmount ] = useState(0);
-  const activePlayer = useMemo(() => getPlayer(pokerGame.currentHand.currentPlayerTurn), [pokerGame.currentHand.currentPlayerTurn, getPlayer]);
+  const activePlayer = useMemo(() => 
+    pokerGame.players.find((player) => player.name === pokerGame.currentHand.currentPlayerTurn),
+    [pokerGame.currentHand.currentPlayerTurn, pokerGame.players]
+  );
 
   if (!activePlayer || pokerGame.currentHand.handStage === 5) {
     return null;
@@ -16,12 +19,12 @@ function PlayerActions() {
       className={`${activePlayer.seatNumber}-turn`}
     >
       <div id="actions-container">
-        <button className="bet-btn" onClick={() => betHandler(activePlayer, betAmount)}>
+        <button className="bet-btn" onClick={() => dispatch({type: 'playerBet', player: activePlayer, bet: betAmount})}>
           Bet <br></br>
           {betAmount}
         </button>
-        <button className="check-btn" onClick={() => updatePlayerTurn(activePlayer)}>Check</button>
-        <button className="fold-btn" onClick={() => foldHandler(activePlayer)}>Fold</button>
+        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck'})}>Check</button>
+        <button className="fold-btn" onClick={() => dispatch({type: 'playerFold', player: activePlayer})}>Fold</button>
       </div>
       <div className="slider-container">
         <input

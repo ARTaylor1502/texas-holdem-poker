@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { usePokerGame } from "../contexts/PokerGameContext";
 
 function HouseCards() {
-  const {pokerGame} = usePokerGame();
+  const { pokerGame } = usePokerGame();
 
   const activeCards = Object.values(pokerGame.currentHand.houseCards).filter((value) => value !== null);
   

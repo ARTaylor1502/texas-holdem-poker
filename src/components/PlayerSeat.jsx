@@ -2,17 +2,14 @@ import { useMemo, useState } from "react";
 import { usePokerGame } from "../contexts/PokerGameContext";
 
  function PlayerSeat(props) {
-  const {pokerGame, setPokerGame} = usePokerGame();
-  const [revealCards, setRevealCards] = useState(false);
-  const [playerName, setPlayerName] = useState('');
-  const [showNameInput, setShowNameInput] = useState(false);
+  const { pokerGame, dispatch } = usePokerGame();
+  const [ revealCards, setRevealCards ] = useState(false);
+  const [ playerName, setPlayerName ] = useState('');
+  const [ showNameInput, setShowNameInput ] = useState(false);
 
   function addPlayer() {
-    const {players} = pokerGame;
-    //TODO: Make avatar selection dynamic 
-    players.push({name: playerName, chips: 500, avatar: "assets/images/avatars/lady.svg", seatNumber: props.seatNumber });
+    dispatch({type: 'addPlayer', name: playerName, seatNumber: props.seatNumber})
     setShowNameInput(false);
-    setPokerGame({ ...pokerGame, players: players});
   }
 
   const isEmptySeat = !props.player;
