@@ -5,11 +5,16 @@ import { usePokerGame } from "../contexts/PokerGameContext";
   const { pokerGame, dispatch } = usePokerGame();
   const [ revealCards, setRevealCards ] = useState(false);
   const [ playerName, setPlayerName ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState('');
   const [ showNameInput, setShowNameInput ] = useState(false);
 
   function addPlayer() {
-    dispatch({type: 'addPlayer', name: playerName, seatNumber: props.seatNumber})
-    setShowNameInput(false);
+    if (!pokerGame.players.find(p => p.name === playerName)) {
+      dispatch({type: 'addPlayer', name: playerName, seatNumber: props.seatNumber})
+      setShowNameInput(false);
+    } else {
+      setErrorMessage('Player name already registered');
+    }
   }
 
   const isEmptySeat = !props.player;
@@ -76,6 +81,7 @@ import { usePokerGame } from "../contexts/PokerGameContext";
     playerSeat = (
       <div className="seat center-align">
         <div className="player-name-container">
+          {errorMessage && (<div className="error-message">{errorMessage}</div>)}
           <label>Please enter your name:</label>
           <div className="player-name-selection">
             <input onChange={(e) => setPlayerName(e.currentTarget.value)}/>

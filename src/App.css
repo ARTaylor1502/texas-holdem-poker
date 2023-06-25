@@ -340,6 +340,10 @@ html, body, #root,#poker-room {
 	flex-basis: 100%;
 }
 
+.error-message {
+	color: #e32e2e;
+	margin-bottom: 0.5rem;
+}
 
 .bet-btn {
     background: rgb(88 185 41);
