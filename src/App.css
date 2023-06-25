@@ -116,44 +116,44 @@ html, body, #root,#poker-room {
     position: absolute;
 }
 
-.player-container {
+.seat-container {
 	display: flex;
 	flex-direction: row;
 	position: absolute;
 }
 
-.player-container .player-cards {
+.seat-container .player-cards {
 	max-height: 5rem;
 }
 
-.player-container .card-area {
+.seat-container .card-area {
 	top: 5rem;
 }
 
-.player-position-0 {
+.seat-position-0 {
 	top: 5%;
 }
 
-.player-position-1 {
+.seat-position-1 {
 	top: 25%;
     right: 10%;
 }
 
-.player-position-2 {
+.seat-position-2 {
     top: 65%;
     right: 10%;
 }
 
-.player-position-3 {
+.seat-position-3 {
 	bottom: 5%;
 }
 
-.player-position-4 {
+.seat-position-4 {
 	bottom: 25%;
     left: 10%;
 }
 
-.player-position-5 {
+.seat-position-5 {
 	top: 25%;
     left: 10%;
 }

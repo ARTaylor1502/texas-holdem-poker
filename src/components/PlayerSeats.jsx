@@ -1,4 +1,4 @@
-import PlayerSeat from "./PlayerSeat";
+import PlayerSeat from "./Player/PlayerSeat";
 import { usePokerGame } from "../contexts/PokerGameContext";
 import PlayerActions from "./PlayerActions";
 
