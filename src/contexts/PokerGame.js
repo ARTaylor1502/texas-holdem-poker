@@ -167,15 +167,32 @@ export const addPlayer = (state, action) => {
     const newPlayer = {
         name: action.name,
         seatNumber: action.seatNumber,
-        chips: 500,
-        //TODO: Make avatar selection dynamic 
-        avatar: "assets/images/avatars/lady.svg"
+        chips: 1000,
+        avatar: action.avatar ?? null
     }
 
     return {
         ...state,
         players: [...state.players, newPlayer]
     }
+}
+
+export const updatePlayer = (state, action) => {
+    const updatedPlayers = state.players.map((item) => {
+        if (item.name === action.playerId) {
+            return {
+                ...item,
+                avatar: action.avatar
+            }
+        }
+
+        return item
+    });
+
+    return {
+        ...state,
+        players: updatedPlayers
+    };
 }
   
 export const playerBetHandler = (state, action) => {

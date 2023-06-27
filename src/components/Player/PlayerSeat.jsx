@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import { usePokerGame } from "../../contexts/PokerGameContext";
-import PlayerAvatar from "./PlayerAvatar";
 import VacantSeat from "./VacantSeat";
 import PlayerCards from "./PlayerCards";
 import PlayerInfo from "./PlayerInfo";
 import PlayerAdditional from "./PlayerAdditional";
 import SetPlayer from "./SetPlayer";
 import PlayerBlind from "./PlayerBlind";
+import AvatarSelection from "./AvatarSelection";
+import Avatar from "./Avatar";
 
  function PlayerSeat(props) {
   const { pokerGame } = usePokerGame();
@@ -23,6 +24,8 @@ import PlayerBlind from "./PlayerBlind";
 
   if (showNameInput) {
     return <SetPlayer setShowNameInput={setShowNameInput} seatNumber={props.seatNumber} />;
+  } else if (isTakenSeat && !props.player.avatar) {
+    return <AvatarSelection playerId={props.player.name} seatNumber={props.seatNumber} />
   } else if (!isTakenSeat) {
     return <VacantSeat setShowNameInput={setShowNameInput} seatNumber={props.seatNumber}/>;
   }
@@ -35,8 +38,8 @@ import PlayerBlind from "./PlayerBlind";
         <PlayerCards isActivePlayer={isActivePlayer} player={props.player} />
         <PlayerBlind playerName={props.player.name} />
       </div>
-      <PlayerAvatar isActivePlayer={isActivePlayer} playerAvatar={props.player.avatar}/>
-      <PlayerInfo player={props.player}/>
+      <Avatar isActive={isActivePlayer} imgSrc={props.player.avatar}/>
+      <PlayerInfo name={props.player.name} chips={props.player.chips} />
       <PlayerAdditional additional={props.children} />
     </div>
   );

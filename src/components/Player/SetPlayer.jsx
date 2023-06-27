@@ -8,7 +8,7 @@ function SetPlayer({setShowNameInput, seatNumber}) {
 
   function addPlayer() {
     if (!pokerGame.players.find(p => p.name === playerName)) {
-      dispatch({type: 'addPlayer', name: playerName, seatNumber: seatNumber})
+      dispatch({type: 'addPlayer', avatar: null, name: playerName, seatNumber: seatNumber})
       setShowNameInput(false);
     } else {
       setErrorMessage('Player name already registered');

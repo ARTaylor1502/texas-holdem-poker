@@ -1,8 +1,8 @@
-function PlayerInfo({player}) {
+function PlayerInfo({name, chips}) {
     return (
         <div className="player-info">
-            <div className="player-name">{player.name}</div>
-            <div className="player-chips">{player.chips}</div>
+            <div className="player-name">{name}</div>
+            <div className="player-chips">{chips}</div>
         </div>
     );
 }

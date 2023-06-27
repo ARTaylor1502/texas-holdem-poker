@@ -271,6 +271,34 @@ html, body, #root,#poker-room {
     cursor: pointer;
 }
 
+.avatar-selector {
+	background: #d5c4ff;
+	border: 1px solid #000;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	z-index: 100;
+}
+
+.avatar-selector label {
+	display: block;
+	margin-bottom: 1rem;
+}
+
+.avatar-selector .avatars {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.avatar-selector .seat {
+	width: 4rem;
+	height: 4rem;
+}
+
+.avatar-selector .seat img {
+	width: 100%;
+}
+
 .card-area {
 	position: absolute;
 	display: flex;
