@@ -21,9 +21,9 @@ const dealFlop = () => {
 
 const progressToNextHandStage = (hand) => {
     if (hand.handStage === handStages['turn']) {
-        hand.houseCards.turnCard = dealCard();
+        hand.communityCards.turnCard = dealCard();
     } else if (hand.handStage === handStages['river']) {
-        hand.houseCards.riverCard = dealCard();
+        hand.communityCards.riverCard = dealCard();
     }
 
     return hand;
@@ -31,13 +31,13 @@ const progressToNextHandStage = (hand) => {
 
 const calculateWinner = (currentHand) => {
     let finalHands = {
-        house: calculateHighestHand(Object.values(currentHand.houseCards)),
+        house: calculateHighestHand(Object.values(currentHand.communityCards)),
     };
 
     //calculate all players highest hands
     for (let i = 0; i < currentHand.players.length; i++) {
         let playerName = currentHand.players[i].playerId;
-        const playerhouseCombinedHand = currentHand.players[i].hand.concat(Object.values(currentHand.houseCards));
+        const playerhouseCombinedHand = currentHand.players[i].hand.concat(Object.values(currentHand.communityCards));
         finalHands[playerName] = calculateHighestHand(playerhouseCombinedHand);
     }
 
@@ -95,7 +95,7 @@ export const startNewGame = (state) => {
 
     const newHand = {
         players: playersInHand,
-        houseCards: dealFlop(),
+        communityCards: dealFlop(),
         currentPlayerTurn: playersInHand[0].playerId,
         handStage: 1,
         totalPot: state.blinds.small + state.blinds.big

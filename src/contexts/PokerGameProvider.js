@@ -22,7 +22,7 @@ const initialPokerGameState = {
   },
   currentHand: {
       players: [],
-      houseCards: {},
+      communityCards: {},
       currentPlayerTurn: null,
       handStage: 0,
       totalPot: 0

@@ -1,5 +1,5 @@
 import { usePokerGame } from "../contexts/PokerGameContext";
-import HouseCards from "./HouseCards";
+import CommunityCards from "./CommunityCards";
 
 function PokerTable() {
   const { pokerGame } = usePokerGame();
@@ -8,7 +8,7 @@ function PokerTable() {
     <div id="poker-table" className="center-align">
       {pokerGame.currentHand.handStage > 0 && (
         <div id="table-center">
-          <HouseCards />
+          <CommunityCards />
           <div id="total-pot" className="center-align ml-auto">
             <span>Pot Total: {pokerGame.currentHand.totalPot}</span>
           </div>

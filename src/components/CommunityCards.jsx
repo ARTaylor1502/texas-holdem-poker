@@ -1,15 +1,15 @@
 import { useMemo } from "react";
 import { usePokerGame } from "../contexts/PokerGameContext";
 
-function HouseCards() {
+function CommunityCards() {
   const { pokerGame } = usePokerGame();
 
-  const activeCards = Object.values(pokerGame.currentHand.houseCards).filter((value) => value !== null);
+  const activeCards = Object.values(pokerGame.currentHand.communityCards).filter((value) => value !== null);
   
   const tableCards = useMemo(() => Object.entries(activeCards).map(([key, value]) => {
     return (
       <img
-        key={`house-card${key}`}
+        key={`community-card${key}`}
         className="playing-card"
         src={
           pokerGame.currentHand.handStage > 1
@@ -22,8 +22,8 @@ function HouseCards() {
   }), [activeCards, pokerGame.currentHand.handStage]);
 
   return (
-    <div className="house-cards-container">{tableCards}</div>
+    <div className="community-cards-container">{tableCards}</div>
   );
 }
 
-export default HouseCards;
+export default CommunityCards;
