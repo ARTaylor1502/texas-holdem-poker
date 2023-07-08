@@ -1,7 +1,7 @@
-import { usePokerGame } from "../contexts/PokerGameContext";
+import { usePokerGame } from "../../contexts/PokerGameContext";
 import CommunityCards from "./CommunityCards";
 
-function PokerTable() {
+function Table() {
   const { pokerGame } = usePokerGame();
 
   return (
@@ -18,4 +18,4 @@ function PokerTable() {
   );
 }
 
-export default PokerTable;
+export default Table;

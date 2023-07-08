@@ -1,6 +1,6 @@
-import { usePokerGame } from "../../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 
-function PlayerBlind({playerName}) {
+function Blind({playerName}) {
     const { pokerGame } = usePokerGame();
 
     let blindButton;
@@ -14,5 +14,5 @@ function PlayerBlind({playerName}) {
     return blindButton;
 }
   
-export default PlayerBlind;
+export default Blind;
   

@@ -1,7 +1,7 @@
-import { usePokerGame } from "../../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 import Avatar from "./Avatar";
 
-function AvatarSelection({playerId, seatNumber}) {
+function Selector({playerId, seatNumber}) {
     const { dispatch } = usePokerGame();
 
     const addPlayerAvatar = (playerId, avatar) => {
@@ -21,5 +21,5 @@ function AvatarSelection({playerId, seatNumber}) {
     );
 }
   
-export default AvatarSelection;
+export default Selector;
   

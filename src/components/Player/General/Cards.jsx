@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { usePokerGame } from "../../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 
-function PlayerCards({isActivePlayer, player}) {
+function Cards({isActivePlayer, player}) {
     const { pokerGame } = usePokerGame();
     const [ revealCards, setRevealCards ] = useState(false);
 
@@ -58,5 +58,5 @@ function PlayerCards({isActivePlayer, player}) {
     );
   }
   
-  export default PlayerCards;
+  export default Cards;
   

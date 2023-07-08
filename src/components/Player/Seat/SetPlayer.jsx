@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePokerGame } from "../../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 
 function SetPlayer({setShowNameInput, seatNumber}) {
   const { pokerGame, dispatch } = usePokerGame();

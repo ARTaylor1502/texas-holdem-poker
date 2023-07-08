@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { usePokerGame } from "../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 
-function PlayerActions() {
+function Actions() {
   const { pokerGame, dispatch } = usePokerGame();
   const [ betAmount, setBetAmount ] = useState(0);
   const activePlayer = useMemo(() => 
@@ -40,4 +40,4 @@ function PlayerActions() {
   );
 }
 
-export default PlayerActions;
+export default Actions;

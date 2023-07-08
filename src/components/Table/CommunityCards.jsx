@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { usePokerGame } from "../contexts/PokerGameContext";
+import { usePokerGame } from "../../contexts/PokerGameContext";
 
 function CommunityCards() {
   const { pokerGame } = usePokerGame();

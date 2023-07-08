@@ -1,4 +1,4 @@
-function PlayerAdditional({additional}) {
+function Additional({additional}) {
     if (!additional) {
         return null;
     }
@@ -8,5 +8,5 @@ function PlayerAdditional({additional}) {
     );
 }
   
-export default PlayerAdditional;
+export default Additional;
   

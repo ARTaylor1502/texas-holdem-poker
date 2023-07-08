@@ -1,4 +1,4 @@
-function PlayerInfo({name, chips}) {
+function Info({name, chips}) {
     return (
         <div className="player-info">
             <div className="player-name">{name}</div>
@@ -7,5 +7,5 @@ function PlayerInfo({name, chips}) {
     );
 }
   
-export default PlayerInfo;
+export default Info;
   

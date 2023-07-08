@@ -1,4 +1,4 @@
-import { usePokerGame } from "../contexts/PokerGameContext";
+import { usePokerGame } from "../../contexts/PokerGameContext";
 
 function NewGameButton() {
   const { pokerGame, dispatch } = usePokerGame();

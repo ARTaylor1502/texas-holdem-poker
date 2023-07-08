@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
-import { usePokerGame } from "../../contexts/PokerGameContext";
+import { usePokerGame } from "../../../contexts/PokerGameContext";
 import VacantSeat from "./VacantSeat";
-import PlayerCards from "./PlayerCards";
-import PlayerInfo from "./PlayerInfo";
-import PlayerAdditional from "./PlayerAdditional";
+import Cards from "../General/Cards";
+import Info from "../General/Info";
+import Additional from "../General/Additional";
 import SetPlayer from "./SetPlayer";
-import PlayerBlind from "./PlayerBlind";
-import AvatarSelection from "./AvatarSelection";
-import Avatar from "./Avatar";
+import Blind from "../General/Blind";
+import Selector from "../Avatar/Selector";
+import Avatar from "../Avatar/Avatar";
 
- function PlayerSeat(props) {
+ function Seat(props) {
   const { pokerGame } = usePokerGame();
   const [ showNameInput, setShowNameInput ] = useState(false);
 
@@ -25,7 +25,7 @@ import Avatar from "./Avatar";
   if (showNameInput) {
     return <SetPlayer setShowNameInput={setShowNameInput} seatNumber={props.seatNumber} />;
   } else if (isTakenSeat && !props.player.avatar) {
-    return <AvatarSelection playerId={props.player.name} seatNumber={props.seatNumber} />
+    return <Selector playerId={props.player.name} seatNumber={props.seatNumber} />
   } else if (!isTakenSeat) {
     return <VacantSeat setShowNameInput={setShowNameInput} seatNumber={props.seatNumber}/>;
   }
@@ -35,14 +35,14 @@ import Avatar from "./Avatar";
       className={`seat-container seat-position-${props.seatNumber}${props.player && pokerGame.currentHand.currentPlayerTurn === props.player.name ? " player-turn" : ""}`}
     >
       <div className="card-area">
-        <PlayerCards isActivePlayer={isActivePlayer} player={props.player} />
-        <PlayerBlind playerName={props.player.name} />
+        <Cards isActivePlayer={isActivePlayer} player={props.player} />
+        <Blind playerName={props.player.name} />
       </div>
       <Avatar isActive={isActivePlayer} imgSrc={props.player.avatar}/>
-      <PlayerInfo name={props.player.name} chips={props.player.chips} />
-      <PlayerAdditional additional={props.children} />
+      <Info name={props.player.name} chips={props.player.chips} />
+      <Additional additional={props.children} />
     </div>
   );
 }
 
-export default PlayerSeat;
+export default Seat;
