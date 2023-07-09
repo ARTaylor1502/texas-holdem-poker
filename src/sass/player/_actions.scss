@@ -14,6 +14,12 @@
 
         @include border-solid-md-light;
 
+        &:disabled {
+            background: $disabled-bg;
+            color: $disabled-text;
+            cursor: not-allowed;
+        }
+
         &:last-child {
             margin-right: 0;
         }

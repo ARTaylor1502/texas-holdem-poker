@@ -4,6 +4,8 @@ import { usePokerGame } from "../../../contexts/PokerGameContext";
 function Actions() {
   const { pokerGame, dispatch } = usePokerGame();
   const [ betAmount, setBetAmount ] = useState(pokerGame.currentHand.handStageMinimumBet);
+  const { handStageMinimumBet: minBet } = pokerGame.currentHand;
+
   const activePlayer = useMemo(() => 
     pokerGame.players.find((player) => player.name === pokerGame.currentHand.currentPlayerTurn),
     [pokerGame.currentHand.currentPlayerTurn, pokerGame.players]
@@ -12,6 +14,9 @@ function Actions() {
   if (!activePlayer || pokerGame.currentHand.handStage === 5) {
     return null;
   }
+
+  const playerIsBigBlind = pokerGame.playerPositions.bigBlind === activePlayer.name;
+  const checkDisabled = (minBet > pokerGame.playerPositions.bigBlind && playerIsBigBlind) || (minBet > 0 && !playerIsBigBlind);
 
   return (
     <div
@@ -23,13 +28,13 @@ function Actions() {
           Bet <br></br>
           {betAmount}
         </button>
-        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck'})}>Check</button>
+        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck'})} disabled={checkDisabled}>Check</button>
         <button className="fold-btn" onClick={() => dispatch({type: 'playerFold', player: activePlayer})}>Fold</button>
       </div>
       <div className="slider-container">
         <input
           type="range"
-          min={pokerGame.currentHand.handStageMinimumBet}
+          min={minBet}
           max={activePlayer.chips}
           className="slider"
           onChange={(e) => setBetAmount(e.currentTarget.value)}
