@@ -98,6 +98,7 @@ export const startNewGame = (state) => {
         communityCards: dealFlop(),
         currentPlayerTurn: playersInHand[0].playerId,
         handStage: 1,
+        handStageMinimumBet: state.blinds.big,
         totalPot: state.blinds.small + state.blinds.big
     };
 

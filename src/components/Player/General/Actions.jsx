@@ -3,7 +3,7 @@ import { usePokerGame } from "../../../contexts/PokerGameContext";
 
 function Actions() {
   const { pokerGame, dispatch } = usePokerGame();
-  const [ betAmount, setBetAmount ] = useState(0);
+  const [ betAmount, setBetAmount ] = useState(pokerGame.currentHand.handStageMinimumBet);
   const activePlayer = useMemo(() => 
     pokerGame.players.find((player) => player.name === pokerGame.currentHand.currentPlayerTurn),
     [pokerGame.currentHand.currentPlayerTurn, pokerGame.players]
@@ -29,8 +29,7 @@ function Actions() {
       <div className="slider-container">
         <input
           type="range"
-          //TODO Make dynamic minimum bet amount
-          min={0}
+          min={pokerGame.currentHand.handStageMinimumBet}
           max={activePlayer.chips}
           className="slider"
           onChange={(e) => setBetAmount(e.currentTarget.value)}

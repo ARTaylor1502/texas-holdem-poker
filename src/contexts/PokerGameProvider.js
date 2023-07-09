@@ -24,6 +24,7 @@ const initialPokerGameState = {
       players: [],
       communityCards: {},
       currentPlayerTurn: null,
+      handStageMinimumBet: 0,
       handStage: 0,
       totalPot: 0
   },
