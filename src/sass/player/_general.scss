@@ -1,0 +1,57 @@
+.player-name-container {
+	border-radius: $border-radius-sm;
+    position: absolute;
+	padding: $spacing-md;
+	background: $colour2;
+
+	@include stack-level-1;
+	@include border-solid-sm-dark;
+}
+
+.player-name-container label {
+	display: block;
+	margin-bottom: $spacing-sm;
+}
+
+.player-info {
+    width: 15rem;
+    position: fixed;
+    background: $colour2;
+    margin-left: $spacing-xxxl;
+	border-radius: $border-radius-sm;
+
+	@include stack-level-4;
+}
+
+.player-additional {
+	position: absolute;
+	top: 8rem;
+
+	@include stack-level-1;
+}
+
+.player-name {
+	background-color: $colour1;
+	padding: $spacing-sm $spacing-xxxl;
+	color: $text-light;
+	border-top-right-radius: $border-radius-sm;
+}
+
+.player-chips {
+	padding: $spacing-sm $spacing-xxxl;
+	font-size: $font-size-md;
+}
+
+.player-area {
+  height: 20%;
+
+  @include stack-level-2;
+}
+
+.player-turn {
+    .seat, .player-info {
+        box-shadow: 0px 0px 10px 5px $highlight-glow;
+
+		@include border-solid-md-light;
+    }
+}

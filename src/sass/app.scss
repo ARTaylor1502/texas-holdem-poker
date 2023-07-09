@@ -1,0 +1,26 @@
+@import "./general";
+
+@import "./alerts";
+@import "./avatar";
+@import "./blinds";
+@import "./button";
+@import "./poker-table";
+@import "./seat";
+@import "./slider";
+
+@import "./player";
+
+.App {
+  height: 100%;
+  width: 100%;
+}
+
+#app-container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+#poker-room {
+  background: radial-gradient(circle, $poker-room-bg-gradient-1 0%, $poker-room-bg-gradient-2 100%);
+  flex-direction: column;
+}

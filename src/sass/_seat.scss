@@ -1,0 +1,61 @@
+.seat-container {
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+
+    .player-cards {
+        max-height: 5rem;
+    }
+
+    .card-area {
+        top: 5rem;
+    }
+}
+
+.seat {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, $seat-bg-gradient-1 0%, $seat-bg-gradient-2 100%);
+    color: $bg-light;
+    cursor: pointer;
+    overflow: hidden;
+    @include stack-level-3;
+    @include border-solid-sm-light;
+  }
+
+.seat-position-0 {
+	top: 5%;
+}
+
+.seat-position-1 {
+	top: 25%;
+    right: 10%;
+}
+
+.seat-position-2 {
+    top: 65%;
+    right: 10%;
+}
+
+.seat-position-3 {
+	bottom: 5%;
+}
+
+.seat-position-4 {
+	bottom: 25%;
+    left: 10%;
+}
+
+.seat-position-5 {
+	top: 25%;
+    left: 10%;
+}
+
+.taken-seat {
+	background-color: $bg-dark;
+}
+
+.seat.inactive img {
+	opacity: 0.5;
+}

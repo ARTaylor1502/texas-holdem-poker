@@ -1,0 +1,11 @@
+.big-blind {
+	background-color: $big-blind-bg;
+}
+
+.small-blind {
+	background-color: $small-blind-bg;
+}
+
+.big-blind, .small-blind {
+	@include stack-level-1;
+}

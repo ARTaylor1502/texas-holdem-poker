@@ -1,0 +1,18 @@
+.player-name-selection {
+    display: flex;
+
+    input {
+        line-height: 2rem;
+    }
+
+    button {
+        margin-left: $spacing-md;
+        color: $text-light;
+        background-color: $colour3;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+
+        @include border-solid-md-light;
+    }
+}

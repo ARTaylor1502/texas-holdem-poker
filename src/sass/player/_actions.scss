@@ -1,0 +1,25 @@
+
+#player-actions {
+    position: fixed;
+	width: 25rem;
+
+    button {
+        color: $text-light;
+        padding: $spacing-xs $spacing-sm-m;
+        font-size: $font-size-sm;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+        margin-right: $spacing-sm-m;
+        flex-basis: 100%;
+
+        @include border-solid-md-light;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+#actions-container {
+	display: flex;
+}

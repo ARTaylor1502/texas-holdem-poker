@@ -1,0 +1,41 @@
+#poker-table {
+	height: 35%;
+    width: 40%;
+    display: flex;
+    position: relative; 
+    border-radius: $border-radius-lg;
+    background: $poker-table-bg-gradient-1;
+    background: radial-gradient(circle, $poker-table-bg-gradient-1 0%, $poker-table-bg-gradient-2 100%);
+
+    @include border-solid-lg-dark;
+
+    .playing-card {
+        margin-right: $spacing-sm;
+        max-height: 8rem;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}
+
+#table-center {
+	display: flex;
+	align-items: center;
+}
+
+#total-pot {
+	background-color: $bg-light;
+	height: fit-content;
+	padding: $spacing-sm;
+	position: absolute;
+    right: 3rem;
+
+    @include border-solid-sm-dark;
+}
+
+#poker-players-container {
+    height: 65%;
+    width: 70%;
+    position: absolute;
+}

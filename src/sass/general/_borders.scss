@@ -1,0 +1,23 @@
+@mixin border-solid-sm-dark {
+    border: 1px solid $border-dark;
+}
+
+@mixin border-solid-sm-light {
+    border: 1px solid $border-light;
+}
+
+@mixin border-solid-md-dark {
+    border: 3px solid $bg-dark;
+}
+
+@mixin border-solid-md-light {
+    border: 3px solid $bg-light;
+}
+
+
+@mixin border-solid-lg-dark {
+    border: 2rem solid $bg-dark;
+}
+
+$border-radius-sm: 0.5rem;
+$border-radius-lg: 3rem;

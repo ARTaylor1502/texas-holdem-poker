@@ -1,0 +1,15 @@
+@mixin stack-level-1 {
+    z-index: 99;
+}
+
+@mixin stack-level-2 {
+    z-index: 20;
+}
+
+@mixin stack-level-3 {
+    z-index: 10;
+}
+
+@mixin stack-level-4 {
+    z-index: 5;
+}

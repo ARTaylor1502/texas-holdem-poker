@@ -1,0 +1,25 @@
+.player-cards {
+    @include stack-level-1;
+	display: flex;
+	cursor: pointer;
+
+    .playing-card {
+        position: relative;
+        max-height: 8rem;
+
+        &:first-child {
+            transform: rotate(354deg);
+        }
+
+        &:nth-child(2) {
+            transform: rotate(8deg);
+            right: 4.5em;
+            top: 0.5rem;
+        }
+    }
+}
+
+.card-area {
+	position: absolute;
+	display: flex;
+}

@@ -1,0 +1,27 @@
+.avatar-selector {
+	background: $colour2;
+	border-radius: $border-radius-sm;
+	padding: $spacing-md;
+	@include stack-level-1;
+    @include border-solid-sm-dark;
+
+    label {
+        display: block;
+        margin-bottom: $spacing-md;
+    }
+
+    .avatars {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: $spacing-md;
+    }
+
+    .seat {
+        width: 4rem;
+        height: 4rem;
+
+        img {
+            width: 100%;
+        }
+    }
+}
