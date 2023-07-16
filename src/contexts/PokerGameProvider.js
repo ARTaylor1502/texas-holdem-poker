@@ -1,6 +1,7 @@
 import { PokerGameContext } from './PokerGameContext';
 import { useReducer } from 'react';
 import { 
+  initialPokerGameState,
   startNewGame, 
   addPlayer,
   updatePlayer,
@@ -8,27 +9,6 @@ import {
   playerCheckHandler, 
   playerBetHandler 
 } from './PokerGame';
-
-const initialPokerGameState = {
-  numberOfSeats: 6,
-  players: [],
-  blinds: {
-      small: 25,
-      big: 50
-  },
-  playerPositions: {
-      smallBlind: null,
-      bigBlind: null,
-  },
-  currentHand: {
-      players: [],
-      communityCards: {},
-      currentPlayerTurn: null,
-      handStageMinimumBet: 0,
-      handStage: 0,
-      totalPot: 0
-  },
-}
 
 function reducer(state, action) {
   switch(action.type) {

@@ -1,12 +1,39 @@
 import { calculateHighestHand, dealCard } from "../helpers/cards/cards";
 
-const handStages = {
-    preGame: 0,
-    preFlop: 1,
-    flop: 2,
-    turn: 3,
-    river: 4,
-    endGame: 5
+export const initialPokerGameState = {
+    numberOfSeats: 6,
+    players: [],
+    blinds: {
+        small: 25,
+        big: 50
+    },
+    playerPositions: {
+        smallBlind: null,
+        bigBlind: null,
+    },
+    currentHand: {
+        players: [],
+        communityCards: {},
+        currentPlayerTurn: null,
+        playerActions: {
+          preFlop: [],
+          flop: [],
+          turn: [],
+          river: [],
+        },
+        handStageMinimumBet: 0,
+        handStage: 0,
+        totalPot: 0
+    },
+  }
+
+export const handStages = {
+    0: 'preGame',
+    1: 'preFlop',
+    2: 'flop',
+    3: 'turn',
+    4: 'river',
+    5: 'endGame'
 }
   
 const dealFlop = () => {
@@ -20,9 +47,9 @@ const dealFlop = () => {
 }
 
 const progressToNextHandStage = (hand) => {
-    if (hand.handStage === handStages['turn']) {
+    if (handStages[hand.handStage] === 'turn') {
         hand.communityCards.turnCard = dealCard();
-    } else if (hand.handStage === handStages['river']) {
+    } else if (handStages[hand.handStage] === 'river') {
         hand.communityCards.riverCard = dealCard();
     }
 
@@ -66,10 +93,9 @@ const updatePlayerTurn = (currentHand) => {
 
         return updatedHand;
     } else {
-
         updatedHand.handStage++;
-
-        if (updatedHand.handStage < handStages['endGame']) {
+    
+        if (updatedHand.handStage < Object.keys(handStages).find((key) => handStages[key] === 'endGame')) {
             updatedHand.currentPlayerTurn = currentHand.players[nextPlayerIndex].playerId;
             
             return progressToNextHandStage(updatedHand)
@@ -97,7 +123,7 @@ export const startNewGame = (state) => {
         players: playersInHand,
         communityCards: dealFlop(),
         currentPlayerTurn: playersInHand[0].playerId,
-        handStage: 1,
+        handStage: Object.keys(handStages).find((key) => handStages[key] === 'preFlop'),
         handStageMinimumBet: state.blinds.big,
         totalPot: state.blinds.small + state.blinds.big
     };
@@ -146,7 +172,10 @@ export const startNewGame = (state) => {
     return {
         ...state,
         playerPositions: newPlayerPositions,
-        currentHand: newHand,
+        currentHand: {
+            ...initialPokerGameState.currentHand,
+            ...newHand,
+        },
         players: state.players.map((item, index) => {
             if (index === smallBlindPlayerIndex) {
                 return {
@@ -213,8 +242,18 @@ export const playerBetHandler = (state, action) => {
 
     return {
         ...state,
-        currentHand: updatePlayerTurn(updatedHand),
-        players: updatedPlayers
+        players: updatedPlayers,
+        currentHand: {
+            ...state.currentHand,
+            ...updatePlayerTurn(updatedHand),
+            playerActions: {
+                ...state.currentHand.playerActions,
+                [handStages[action.handStage]]: [
+                    ...state.currentHand.playerActions[handStages[action.handStage]],
+                    {playerId: action.player.name, actionType: 'bet', betAmount: action.bet}
+                ]
+            }
+        }
     };
 }
 
@@ -223,7 +262,14 @@ export const playerCheckHandler = (state, action) => {
         ...state,
         currentHand: {
             ...state.currentHand,
-            ...updatePlayerTurn(state.currentHand)
+            ...updatePlayerTurn(state.currentHand),
+            playerActions: {
+                ...state.currentHand.playerActions,
+                [handStages[action.handStage]]: [
+                    ...state.currentHand.playerActions[handStages[action.handStage]],
+                    {playerId: action.player.name, actionType: 'check', betAmount: 0}
+                ]
+            }
         }
     }
 }
@@ -244,7 +290,14 @@ export const playerFoldHandler = (state, action) => {
             currentHand: {
                 ...state.currentHand,
                 players: updatedHand.players,
-                handStage: 5
+                handStage: Object.keys(handStages).find((key) => handStages[key] === 'endGame'),
+                playerActions: {
+                    ...state.currentHand.playerActions,
+                    [handStages[action.handStage]]: [
+                        ...state.currentHand.playerActions[handStages[action.handStage]],
+                        {playerId: action.player.name, actionType: 'fold', betAmount: 0}
+                    ]
+                }
             },
             players: state.players.map((item) => {
                 if (item.name === updatedHand.players[0].playerId) {

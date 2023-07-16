@@ -24,12 +24,12 @@ function Actions() {
       className={`${activePlayer.seatNumber}-turn`}
     >
       <div id="actions-container">
-        <button className="bet-btn" onClick={() => dispatch({type: 'playerBet', player: activePlayer, bet: betAmount})}>
+        <button className="bet-btn" onClick={() => dispatch({type: 'playerBet', player: activePlayer, bet: betAmount, handStage: pokerGame.currentHand.handStage})}>
           Bet <br></br>
           {betAmount}
         </button>
-        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck'})} disabled={checkDisabled}>Check</button>
-        <button className="fold-btn" onClick={() => dispatch({type: 'playerFold', player: activePlayer})}>Fold</button>
+        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage})} disabled={checkDisabled}>Check</button>
+        <button className="fold-btn" onClick={() => dispatch({type: 'playerFold', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage})}>Fold</button>
       </div>
       <div className="slider-container">
         <input
