@@ -10,11 +10,15 @@
 	@include border-solid-sm-dark;
 }
 
-.bet-btn {
-    background: $bet-btn-bg;
+.raise-btn {
+    background: $raise-btn-bg;
 }
 
 .check-btn {
+	background: $check-btn-bg;
+}
+
+.call-btn {
 	background: $check-btn-bg;
 }
 

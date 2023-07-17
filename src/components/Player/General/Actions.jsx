@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { usePokerGame } from "../../../contexts/PokerGameContext";
+import { handStages } from '../../../contexts/PokerGame'
+import ActionButton from "./ActionButton";
 
 function Actions() {
-  const { pokerGame, dispatch } = usePokerGame();
+  const { pokerGame } = usePokerGame();
   const [ betAmount, setBetAmount ] = useState(pokerGame.currentHand.handStageMinimumBet);
   const { handStageMinimumBet: minBet } = pokerGame.currentHand;
 
@@ -17,6 +19,14 @@ function Actions() {
 
   const playerIsBigBlind = pokerGame.playerPositions.bigBlind === activePlayer.name;
   const checkDisabled = (minBet > pokerGame.playerPositions.bigBlind && playerIsBigBlind) || (minBet > 0 && !playerIsBigBlind);
+  const activePlayerCommittedChips = 
+    pokerGame.currentHand.playerActions[handStages[pokerGame.currentHand.handStage]]
+    .filter(action => action.playerId === activePlayer.name)
+    .reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.betAmount
+    },0);
+
+  const callAmount = pokerGame.currentHand.handStageMinimumBet - activePlayerCommittedChips;
 
   return (
     <div
@@ -24,12 +34,26 @@ function Actions() {
       className={`${activePlayer.seatNumber}-turn`}
     >
       <div id="actions-container">
-        <button className="bet-btn" onClick={() => dispatch({type: 'playerBet', player: activePlayer, bet: betAmount, handStage: pokerGame.currentHand.handStage})}>
-          Bet <br></br>
-          {betAmount}
-        </button>
-        <button className="check-btn" onClick={() => dispatch({type: 'playerCheck', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage})} disabled={checkDisabled}>Check</button>
-        <button className="fold-btn" onClick={() => dispatch({type: 'playerFold', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage})}>Fold</button>
+        {callAmount > 0 &&
+          <ActionButton 
+            className="call-btn" 
+            dispatchObj={{type: 'playerBet', player: activePlayer, bet: callAmount, handStage: pokerGame.currentHand.handStage}}
+            children={<span>Call</span>}/>
+        }
+        <ActionButton 
+          className="raise-btn"
+          dispatchObj={{type: 'playerBet', player: activePlayer, bet: betAmount, handStage: pokerGame.currentHand.handStage}}
+          children={<span>Raise <br></br>{betAmount}</span>}/>
+        {!checkDisabled > 0 &&
+          <ActionButton 
+            className="check-btn"
+            dispatchObj={{type: 'playerCheck', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage}}
+            children={<span>Check</span>}/>
+        }
+        <ActionButton 
+          className="fold-btn"
+          dispatchObj={{type: 'playerFold', player: activePlayer, bet: 0, handStage: pokerGame.currentHand.handStage}}
+          children={<span>Fold</span>}/>
       </div>
       <div className="slider-container">
         <input
