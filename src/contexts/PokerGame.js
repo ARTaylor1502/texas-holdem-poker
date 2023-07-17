@@ -175,6 +175,14 @@ export const startNewGame = (state) => {
         currentHand: {
             ...initialPokerGameState.currentHand,
             ...newHand,
+            playerActions: {
+                ...state.currentHand.playerActions,
+                'preFlop': [
+                    ...state.currentHand.playerActions['preFlop'],
+                    {playerId: newPlayerPositions.smallBlind, actionType: 'smallBlind', betAmount: state.blinds.small},
+                    {playerId: newPlayerPositions.bigBlind, actionType: 'bigBlind', betAmount: state.blinds.big}
+                ]
+            }
         },
         players: state.players.map((item, index) => {
             if (index === smallBlindPlayerIndex) {
