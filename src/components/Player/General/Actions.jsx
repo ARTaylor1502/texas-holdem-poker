@@ -60,6 +60,7 @@ function Actions() {
           type="range"
           min={minBet}
           max={activePlayer.chips}
+          step="25"
           className="slider"
           onChange={(e) => setBetAmount(e.currentTarget.value)}
         />
