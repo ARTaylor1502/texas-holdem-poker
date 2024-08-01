@@ -1,3 +1,4 @@
+import React from 'react';
 import "./sass/app.scss";
 import PokerGame from "./components/PokerGame";
 import { PokerGameProvider } from "./contexts/PokerGameProvider";

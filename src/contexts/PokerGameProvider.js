@@ -1,5 +1,7 @@
+import React from 'react';
 import { PokerGameContext } from './PokerGameContext';
 import { useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { 
   initialPokerGameState,
   startNewGame, 
@@ -30,6 +32,10 @@ function reducer(state, action) {
 }
 
 export function PokerGameProvider({ children }) {
+  PokerGameProvider.propTypes = {
+      children: PropTypes.any
+  };
+
     const [pokerGame, dispatch] = useReducer(reducer, initialPokerGameState);
     
     return (
